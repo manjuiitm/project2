@@ -52,8 +52,8 @@ The following analyses may provide further insights:
 - Consider time series analysis for trends and forecasting.
 ### Visualizations
 Below are the visualizations that support the analysis:
-![Chart](/content/missing_values.png)
-![Chart](/content/correlation_matrix.png)
-![Chart](/content/boxplot.png)
-![Clustering Results](/content/clustering_results.png)
-![Dendrogram](/content/dendrogram.png)
+![Chart](missing_values.png)
+![Chart](correlation_matrix.png)
+![Chart](boxplot.png)
+![Clustering Results](clustering_results.png)
+![Dendrogram](dendrogram.png)
