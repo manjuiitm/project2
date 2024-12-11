@@ -68,7 +68,7 @@ The following analyses may provide further insights:
 - Try hierarchical clustering for grouping observations.
 ### Visualizations
 Below are the visualizations that support the analysis:
-![Chart](/content/missing_values.png)
+![Chart](missing_values.png)
 ![Chart](/content/correlation_matrix.png)
 ![Chart](/content/boxplot.png)
 ![Clustering Results](/content/clustering_results.png)
