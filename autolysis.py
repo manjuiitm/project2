@@ -125,8 +125,22 @@ def evaluate_with_llm(readme_path, image_descriptions, api_token):
     payload = {
         "model": "gpt-4o-mini",
         "messages": [
-            {"role": "system", "content": "You are an expert in data analysis and visualization."},
-            {"role": "user", "content": f"Evaluate the following documentation and visualizations:\n\n### README.md Content:\n{readme_content}\n\n### Visualizations:\n{image_descriptions}"}
+            {"role": "system", "content": "You are an expert in data analysis and visualization. You are tasked with evaluating the documentation and visualizations generated for a dataset."},
+            {"role": "user", "content": f"""
+Evaluate the following data analysis report, which includes a detailed README, visualizations, and clustering results. Your task is to review both the text-based insights in the README as well as the insights derived from the visualizations described below.
+
+### README Content:
+{readme_content}
+
+### Visualizations:
+{image_descriptions}
+
+Ensure that the evaluation covers the following:
+- General quality and clarity of the documentation.
+- Appropriateness and clarity of the generated visualizations (charts).
+- Key insights or patterns revealed by the data and visualizations, including any clustering analysis.
+- Any potential improvements to the analysis or visualizations.
+            """}
         ]
     }
 
@@ -137,6 +151,7 @@ def evaluate_with_llm(readme_path, image_descriptions, api_token):
     except requests.exceptions.RequestException as e:
         print(f"Error during evaluation: {e}")
         return None
+
 
 def main():
     # Hardcoded API token
@@ -152,7 +167,12 @@ def main():
         print(f"Error: File {filename} does not exist.")
         return
 
-    output_dir = os.getcwd()
+    # Extract the base name without the .csv extension and create output directory
+    base_name = os.path.splitext(os.path.basename(filename))[0]
+    output_dir = os.path.join(os.getcwd(), base_name)
+    os.makedirs(output_dir, exist_ok=True)
+
+    print(f"Output directory created: {output_dir}")   
     data = load_csv(filename)
     analysis = analyze_data(data)
     charts = generate_charts(data, output_dir)
