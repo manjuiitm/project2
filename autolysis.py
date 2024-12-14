@@ -9,22 +9,7 @@ from sklearn.cluster import KMeans
 from scipy.cluster.hierarchy import dendrogram, linkage
 import sys
 import subprocess
-
-# Function to install a package
-def install_package(package):
-    try:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
-    except Exception as e:
-        print(f"Error installing package {package}: {e}")
-        sys.exit(1)
-
-# Ensure matplotlib is installed
-try:
-    import matplotlib.pyplot as plt
-except ModuleNotFoundError:
-    print("matplotlib is not installed. Attempting to install it now...")
-    install_package("matplotlib")
-    import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 def load_csv(filename):
     try:
