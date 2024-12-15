@@ -9,6 +9,7 @@ from sklearn.cluster import KMeans
 from scipy.cluster.hierarchy import dendrogram, linkage
 import sys
 import subprocess
+from dotenv import load_dotenv
 
 # Function to install a package
 def install_package(package):
@@ -130,14 +131,14 @@ def describe_images(output_dir):
             descriptions.append(f"{file} - Generated visualization for {file.split('.')[0].replace('_', ' ').capitalize()}.")
     return "\n".join(descriptions)
 
-def evaluate_with_llm(readme_path, image_descriptions, api_token):
+def evaluate_with_llm(readme_path, image_descriptions, api_key):
     with open(readme_path, 'r') as file:
         readme_content = file.read()
 
     url = "http://aiproxy.sanand.workers.dev/openai/v1/chat/completions"
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_token}"
+        "Authorization": f"Bearer {api_key}"
     }
     payload = {
         "model": "gpt-4o-mini",
@@ -169,10 +170,10 @@ Ensure that the evaluation covers the following:
         print(f"Error during evaluation: {e}")
         return None
 
-
 def main():
     # Hardcoded API token
-    api_token = "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IjI0ZHMyMDAwMTI2QGRzLnN0dWR5LmlpdG0uYWMuaW4ifQ.MIH-1ng-4GLF_CsTpsoHqIZq3RKC_mTv85TJ0940bCY"
+    load_dotenv()
+    api_key = os.getenv('API_KEY')
 
     if len(sys.argv) != 2:
         print("Usage: python autolysis.py <filename>")
@@ -189,7 +190,7 @@ def main():
     output_dir = os.path.join(os.getcwd(), base_name)
     os.makedirs(output_dir, exist_ok=True)
 
-    print(f"Output directory created: {output_dir}")   
+    print(f"Output directory created: {output_dir}")
     data = load_csv(filename)
     analysis = analyze_data(data)
     charts = generate_charts(data, output_dir)
@@ -201,7 +202,7 @@ def main():
 
     image_descriptions = describe_images(output_dir)
 
-    feedback = evaluate_with_llm(readme_path, image_descriptions, api_token)
+    feedback = evaluate_with_llm(readme_path, image_descriptions, api_key)
 
     if feedback:
         print("\n### LLM Feedback:\n")
