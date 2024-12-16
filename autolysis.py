@@ -215,10 +215,10 @@ def main():
         return
 
     # Extract the base name without the .csv extension and create output directory
-    # base_name = os.path.splitext(os.path.basename(filename))[0]
-    # output_dir = os.path.join(os.getcwd(), base_name)
-    # os.makedirs(output_dir, exist_ok=True)
-    output_dir = os.getcwd()
+    base_name = os.path.splitext(os.path.basename(filename))[0]
+    output_dir = os.path.join(os.getcwd(), base_name)
+    os.makedirs(output_dir, exist_ok=True)
+    #output_dir = os.getcwd()
 
     print(f"Output directory created: {output_dir}")
     data = load_csv(filename)
