@@ -33,7 +33,7 @@ try:
 except ModuleNotFoundError:
     print("Seaborn is not installed. Attempting to install it now...")
     install_package("seaborn")
-    iimport seaborn as sns
+    import seaborn as sns
 
 def load_csv(filename):
     try:
