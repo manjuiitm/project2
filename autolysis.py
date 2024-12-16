@@ -27,6 +27,14 @@ except ModuleNotFoundError:
     install_package("matplotlib")
     import matplotlib.pyplot as plt
 
+# Ensure seaborb is installed
+try:
+    import seaborn as sns
+except ModuleNotFoundError:
+    print("Seaborn is not installed. Attempting to install it now...")
+    install_package("seaborn")
+    iimport seaborn as sns
+
 def load_csv(filename):
     try:
         data = pd.read_csv(filename, encoding='ISO-8859-1')
